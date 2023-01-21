@@ -45,9 +45,7 @@ const Home: NextPage = () => {
     return { days, hours, minutes, seconds };
   };
 
-  const date = process.env.STRUNYAN_DATE
-    ? process.env.STRUNYAN_DATE
-    : "2000-01-01";
+  const date = "2023-07-22";
 
   const remaining = useCountdown(date);
 
