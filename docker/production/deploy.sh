@@ -9,5 +9,5 @@ if [ -f "deploy-before.sh" ]; then
 	./deploy-before.sh
 fi
 
-docker-compose pull &&
-docker-compose up -d
+docker compose pull &&
+docker compose up -d
