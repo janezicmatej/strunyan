@@ -13,12 +13,14 @@ build_branches:
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/docker/production/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
   only:
     - branches
+  tags:
+    - arm64
 
-deploy_develop:
+deploy_master:
   stage: deploy
   image: kroniak/ssh-client
   environment:
-    name: develop
+    name: master
     # url: https://exampleurl to be displayed in deploys
   script:
     - mkdir -p ~/.ssh
@@ -30,21 +32,4 @@ deploy_develop:
     - scp docker/production/deploy.sh $SSH_DEPLOY_HOST:~/app/deploy.sh
     - ssh $SSH_DEPLOY_HOST 'cd ~/app && ./deploy.sh'
   only:
-    - develop
-# deploy_master:
-#   stage: deploy
-#   image: kroniak/ssh-client
-#   environment:
-#     name: master
-#     url: https://exampleurl to be displayed in deploys
-#   script:
-#     - mkdir -p ~/.ssh
-#     - chmod 700 ~/.ssh
-#     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-#     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
-#     - chmod 600 ~/.ssh/id_ed25519
-#     - scp docker/production/docker-compose.yaml $SSH_DEPLOY_HOST:~/app/docker-compose.yaml
-#     - scp docker/production/deploy.sh $SSH_DEPLOY_HOST:~/app/deploy.sh
-#     - ssh $SSH_DEPLOY_HOST 'cd ~/app && ./deploy.sh'
-#   only:
-#     - master
+    - master
