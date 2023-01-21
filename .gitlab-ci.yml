@@ -28,8 +28,8 @@ deploy_master:
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
     - chmod 600 ~/.ssh/id_ed25519
-    - scp docker/production/docker-compose.yaml $SSH_DEPLOY_HOST:~/app/docker-compose.yaml
-    - scp docker/production/deploy.sh $SSH_DEPLOY_HOST:~/app/deploy.sh
-    - ssh $SSH_DEPLOY_HOST 'cd ~/app && ./deploy.sh'
+    - scp -P "$SSH_PORT" docker/production/docker-compose.yaml $SSH_DEPLOY_HOST:~/app/docker-compose.yaml
+    - scp -P "$SSH_PORT" docker/production/deploy.sh $SSH_DEPLOY_HOST:~/app/deploy.sh
+    - ssh -p "$SSH_PORT" $SSH_DEPLOY_HOST 'cd ~/app && ./deploy.sh'
   only:
     - master
