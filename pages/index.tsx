@@ -30,6 +30,10 @@ const Home: NextPage = () => {
   };
 
   const getReturnValues = (countDown: number): IRemaining => {
+    if (countDown < 0) {
+      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    }
+
     // calculate time left
     const days = Math.floor(countDown / (1000 * 60 * 60 * 24));
     const hours = Math.floor(
@@ -41,9 +45,11 @@ const Home: NextPage = () => {
     return { days, hours, minutes, seconds };
   };
 
-  const remaining = process.env.STRUNYAN_DATE
-    ? useCountdown(process.env.STRUNYAN_DATE)
-    : { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  const date = process.env.STRUNYAN_DATE
+    ? process.env.STRUNYAN_DATE
+    : "2000-01-01";
+
+  const remaining = useCountdown(date);
 
   return (
     <div>
