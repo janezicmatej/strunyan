@@ -60,6 +60,7 @@ const Home: NextPage = () => {
       <Center>
         <h1>Strunjan bo letos epski</h1>
       </Center>
+      <Center>(to je zato ker se bo začel 22. 7.)</Center>
       <Center>
         <h1>
           {(remaining?.days + "").padStart(2, "0")}:
