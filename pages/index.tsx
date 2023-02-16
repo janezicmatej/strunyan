@@ -45,9 +45,11 @@ const Home: NextPage = () => {
     return { days, hours, minutes, seconds };
   };
 
-  const date = "2023-07-22";
+  const date = process.env.NEXT_PUBLIC_STRUNYAN_DATE || "2000-01-01";
 
   const remaining = useCountdown(date);
+
+  const parsedDate = new Date(date).toLocaleDateString("sl");
 
   return (
     <div>
@@ -60,7 +62,9 @@ const Home: NextPage = () => {
       <Center>
         <h1>Strunjan bo letos epski</h1>
       </Center>
-      <Center>(to je zato ker se bo začel 22. 7.)</Center>
+      <Center>
+        <h1>{parsedDate}</h1>
+      </Center>
       <Center>
         <h1>
           {(remaining?.days + "").padStart(2, "0")}:
