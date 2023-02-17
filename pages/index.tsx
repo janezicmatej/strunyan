@@ -49,7 +49,8 @@ const Home: NextPage = () => {
 
   const remaining = useCountdown(date);
 
-  const parsedDate = new Date(date).toLocaleDateString("sl");
+  const dateObject = new Date(date);
+  const parsedDate = dateObject.toLocaleDateString("sl");
 
   return (
     <div>
@@ -60,19 +61,28 @@ const Home: NextPage = () => {
       </Head>
 
       <Center>
-        <h1>Strunjan bo letos epski</h1>
-      </Center>
-      <Center>
-        <h1>{parsedDate}</h1>
-      </Center>
-      <Center>
+        {" "}
         <h1>
-          {(remaining?.days + "").padStart(2, "0")}:
-          {(remaining?.hours + "").padStart(2, "0")}:
-          {(remaining?.minutes + "").padStart(2, "0")}:
-          {(remaining?.seconds + "").padStart(2, "0")}
+          {dateObject > new Date()
+            ? "Strunjan bo letos epski"
+            : "Strunjan je bil epski"}
         </h1>
       </Center>
+      {dateObject > new Date() && (
+        <>
+          <Center>
+            <h1>{parsedDate}</h1>
+          </Center>
+          <Center>
+            <h1>
+              {(remaining?.days + "").padStart(2, "0")}:
+              {(remaining?.hours + "").padStart(2, "0")}:
+              {(remaining?.minutes + "").padStart(2, "0")}:
+              {(remaining?.seconds + "").padStart(2, "0")}
+            </h1>
+          </Center>
+        </>
+      )}
     </div>
   );
 };
