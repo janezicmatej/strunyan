@@ -3,7 +3,8 @@ const nextConfig = {
   swcMinify: true,
   output: "standalone",
   env: {
-    NEXT_PUBLIC_STRUNYAN_DATE: process.env.STRUNYAN_DATE,
+    NEXT_PUBLIC_STRUNYAN_DATE_FROM: process.env.STRUNYAN_DATE_FROM,
+    NEXT_PUBLIC_STRUNYAN_DATE_TO: process.env.STRUNYAN_DATE_TO,
   },
 };
 

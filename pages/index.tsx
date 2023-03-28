@@ -45,12 +45,15 @@ const Home: NextPage = () => {
     return { days, hours, minutes, seconds };
   };
 
-  const date = process.env.NEXT_PUBLIC_STRUNYAN_DATE || "2000-01-01";
+  const dateFrom = process.env.NEXT_PUBLIC_STRUNYAN_DATE_FROM || "2000-01-01";
+  const dateFromObject = new Date(dateFrom);
+  const parsedDateFrom = dateFromObject.toLocaleDateString("sl");
 
-  const remaining = useCountdown(date);
+  const dateTo = process.env.NEXT_PUBLIC_STRUNYAN_DATE_TO || "2000-01-02";
+  const dateToObject = new Date(dateTo);
+  const parsedDateTo = dateToObject.toLocaleDateString("sl");
 
-  const dateObject = new Date(date);
-  const parsedDate = dateObject.toLocaleDateString("sl");
+  const remaining = useCountdown(dateFrom);
 
   return (
     <div>
@@ -63,15 +66,19 @@ const Home: NextPage = () => {
       <Center>
         {" "}
         <h1>
-          {dateObject > new Date()
-            ? "Strunjan bo letos epski"
-            : "Strunjan je bil epski"}
+          {dateFromObject < new Date() &&
+            dateToObject > new Date() &&
+            "Strunjan je letos epski!"}
+          {dateToObject < new Date() && "Strunjan je bil letos epski!"}
+          {dateFromObject > new Date() && "Strunjan bo letos epski!"}
         </h1>
       </Center>
-      {dateObject > new Date() && (
+      {dateFromObject > new Date() && (
         <>
           <Center>
-            <h1>{parsedDate}</h1>
+            <h1>
+              {parsedDateFrom} - {parsedDateTo}
+            </h1>
           </Center>
           <Center>
             <h1>

@@ -1,9 +1,11 @@
-ARG STRUNYAN_DATE=2000-01-01
+ARG STRUNYAN_DATE_FROM=2000-01-01
+ARG STRUNYAN_DATE_TO=2000-01-02
 
 # Install dependencies only when needed
 FROM node:18-alpine AS deps
 
-ARG STRUNYAN_DATE
+ARG STRUNYAN_DATE_FROM
+ARG STRUNYAN_DATE_TO
 
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
@@ -22,7 +24,8 @@ RUN \
 # Rebuild the source code only when needed
 FROM node:18-alpine AS builder
 
-ARG STRUNYAN_DATE
+ARG STRUNYAN_DATE_FROM
+ARG STRUNYAN_DATE_TO
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -41,8 +44,10 @@ RUN yarn build
 # Production image, copy all the files and run next
 FROM node:18-alpine AS runner
 
-ARG STRUNYAN_DATE
-ENV STRUNYAN_DATE=${STRUNYAN_DATE}
+ARG STRUNYAN_DATE_FROM
+ARG STRUNYAN_DATE_TO
+ENV STRUNYAN_DATE_FROM=${STRUNYAN_DATE_FROM}
+ENV STRUNYAN_DATE_TO=${STRUNYAN_DATE_TO}
 
 WORKDIR /app
 
