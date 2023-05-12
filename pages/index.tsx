@@ -1,7 +1,64 @@
-import { Center } from "@mantine/core";
+import { Box, Center, Paper, Stack } from "@mantine/core";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+
+const colors = [
+  "#FF6633",
+  "#FFB399",
+  "#FF33FF",
+  "#FFFF99",
+  "#00B3E6",
+  "#E6B333",
+  "#3366E6",
+  "#999966",
+  "#99FF99",
+  "#B34D4D",
+  "#80B300",
+  "#809900",
+  "#E6B3B3",
+  "#6680B3",
+  "#66991A",
+  "#FF99E6",
+  "#CCFF1A",
+  "#FF1A66",
+  "#E6331A",
+  "#33FFCC",
+  "#66994D",
+  "#B366CC",
+  "#4D8000",
+  "#B33300",
+  "#CC80CC",
+  "#66664D",
+  "#991AFF",
+  "#E666FF",
+  "#4DB3FF",
+  "#1AB399",
+  "#E666B3",
+  "#33991A",
+  "#CC9999",
+  "#B3B31A",
+  "#00E680",
+  "#4D8066",
+  "#809980",
+  "#E6FF80",
+  "#1AFF33",
+  "#999933",
+  "#FF3380",
+  "#CCCC00",
+  "#66E64D",
+  "#4D80CC",
+  "#9900B3",
+  "#E64D66",
+  "#4DB380",
+  "#FF4D4D",
+  "#99E6E6",
+  "#6666FF",
+];
+
+function randomItem(list: string[]): string {
+  return list[Math.floor(Math.random() * list.length)];
+}
 
 interface IRemaining {
   days: number;
@@ -11,6 +68,9 @@ interface IRemaining {
 }
 
 const Home: NextPage = () => {
+  const bg = randomItem(colors);
+  //console.log(bg);
+
   const useCountdown = (targetDate: string) => {
     const countDownDate = new Date(targetDate).getTime();
 
@@ -63,33 +123,48 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Center>
-        {" "}
-        <h1>
-          {dateFromObject < new Date() &&
-            dateToObject > new Date() &&
-            "Strunjan je letos epski!"}
-          {dateToObject < new Date() && "Strunjan je bil letos epski!"}
-          {dateFromObject > new Date() && "Strunjan bo letos epski!"}
-        </h1>
-      </Center>
-      {dateFromObject > new Date() && (
-        <>
-          <Center>
-            <h1>
-              {parsedDateFrom} - {parsedDateTo}
-            </h1>
-          </Center>
-          <Center>
-            <h1>
-              {(remaining?.days + "").padStart(2, "0")}:
-              {(remaining?.hours + "").padStart(2, "0")}:
-              {(remaining?.minutes + "").padStart(2, "0")}:
-              {(remaining?.seconds + "").padStart(2, "0")}
-            </h1>
-          </Center>
-        </>
-      )}
+      <Box
+        sx={{
+          backgroundColor: bg,
+          height: "100vh",
+          width: "100vw",
+          paddingTop: 200,
+        }}
+      >
+        <Center>
+          <Paper sx={{ width: "max-content", padding: 50, borderRadius: 34 }}>
+            <Stack align="center">
+              <Box>
+                {" "}
+                <h1>
+                  {dateFromObject < new Date() &&
+                    dateToObject > new Date() &&
+                    "Strunjan je letos epski!"}
+                  {dateToObject < new Date() && "Strunjan je bil letos epski!"}
+                  {dateFromObject > new Date() && "Strunjan bo letos epski!"}
+                </h1>
+              </Box>
+              {dateFromObject > new Date() && (
+                <>
+                  <Box>
+                    <h1>
+                      {parsedDateFrom} - {parsedDateTo}
+                    </h1>
+                  </Box>
+                  <Box>
+                    <h1>
+                      {(remaining?.days + "").padStart(2, "0")}:
+                      {(remaining?.hours + "").padStart(2, "0")}:
+                      {(remaining?.minutes + "").padStart(2, "0")}:
+                      {(remaining?.seconds + "").padStart(2, "0")}
+                    </h1>
+                  </Box>
+                </>
+              )}
+            </Stack>
+          </Paper>
+        </Center>
+      </Box>
     </div>
   );
 };
